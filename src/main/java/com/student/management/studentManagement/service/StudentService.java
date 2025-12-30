@@ -7,6 +7,7 @@ import com.student.management.studentManagement.exception.StudentNotFoundExcepti
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -15,19 +16,27 @@ public class StudentService {
     @Autowired
     StudentRepository studentRepository;
 
-    public String createStudent(Student student) throws StudentAlreadyExistsException {
+    public void createStudent(Student student) throws StudentAlreadyExistsException {
         if(!studentRepository.findByEmail(student.getEmail()).isEmpty()) {
             throw new StudentAlreadyExistsException("Student already exists");
         }
+        student.setCreatedAt(LocalDateTime.now());
         studentRepository.save(student);
-        return "Success";
     }
 
-    public Optional<Student> findStudentById(int id){
-        return studentRepository.findById(id);
+    public Student findStudentById(int id) throws StudentNotFoundException {
+        Optional<Student> optional = studentRepository.findById(id);
+        if(optional.isEmpty()) {
+            throw new StudentNotFoundException("Student not found");
+        }
+        return optional.get();
     }
 
-    public Optional<Student> findStudentByEmail(String email){
-        return studentRepository.findByEmail(email);
+    public Student findStudentByEmail(String email) throws StudentNotFoundException {
+        Optional<Student> optional = studentRepository.findByEmail(email);
+        if(optional.isEmpty()) {
+            throw new StudentNotFoundException("Student not found");
+        }
+        return optional.get();
     }
 }

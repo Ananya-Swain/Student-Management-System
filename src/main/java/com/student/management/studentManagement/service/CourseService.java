@@ -8,6 +8,7 @@ import com.student.management.studentManagement.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -15,12 +16,16 @@ public class CourseService {
     @Autowired
     CourseRepository courseRepository;
 
-    public String createCourse(Course course) {
+    public void createCourse(Course course) {
+        course.setCreatedAt(LocalDateTime.now());
         courseRepository.save(course);
-        return "Success";
     }
 
-    public Optional<Course> findCourseById(int id){
-        return courseRepository.findById(id);
+    public Course findCourseById(int id) throws CourseNotFoundException {
+        Optional<Course> optional = courseRepository.findById(id);
+        if(optional.isEmpty()) {
+            throw new CourseNotFoundException("Course not found");
+        }
+        return optional.get();
     }
 }
