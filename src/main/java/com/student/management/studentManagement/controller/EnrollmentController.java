@@ -24,12 +24,12 @@ public class EnrollmentController {
         return new ResponseEntity<>("Student enrolled successfully", HttpStatus.CREATED);
     }
 
-    @GetMapping("findCourseOfStudent/{id}")
+    @GetMapping("findCourseOfStudent/{studentId}")
     public ResponseEntity<List<Course>> findCourseOfStudent(@PathVariable int studentId) throws StudentNotFoundException {
         return ResponseEntity.ok(enrollmentService.findEnrollByStudent(studentId));
     }
 
-    @GetMapping("findStudentOfCourse/{id}")
+    @GetMapping("findStudentOfCourse/{courseId}")
     public ResponseEntity<List<Student>> findStudentOfCourse(@PathVariable int courseId) throws CourseNotFoundException {
         return ResponseEntity.ok(enrollmentService.findEnrollByCourse(courseId));
     }

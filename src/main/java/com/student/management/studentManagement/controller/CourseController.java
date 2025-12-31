@@ -1,10 +1,7 @@
 package com.student.management.studentManagement.controller;
 
 import com.student.management.studentManagement.entity.Course;
-import com.student.management.studentManagement.entity.Student;
 import com.student.management.studentManagement.exception.CourseNotFoundException;
-import com.student.management.studentManagement.exception.StudentAlreadyExistsException;
-import com.student.management.studentManagement.exception.StudentNotFoundException;
 import com.student.management.studentManagement.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
